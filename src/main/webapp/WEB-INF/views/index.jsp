@@ -22,6 +22,9 @@
 <h2><spring:message code="patient.patients"/></h2>
 <a href="/patient/all"><spring:message code="patient.seeAll"/></a> <br>
 
+<h2>Przejdź do kalendarza</h2>
+<a href="/calendar">Kalendarz</a>
+
 <footer>
     <spring:message code="app.footer"/>
 </footer>
