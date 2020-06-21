@@ -14,7 +14,8 @@
 <body>
 <h1><spring:message code="app.title"/></h1>
 
-<a href="/case/all"><spring:message code="app.seeAllCasesText"/></a>
+<a href="/patient/all"><spring:message code="patient.seeAll"/></a> <br>
+<a href="/clinic/all"><spring:message code="clinic.seeAll"/></a>
 <footer>
     <spring:message code="app.footer"/>
 </footer>
