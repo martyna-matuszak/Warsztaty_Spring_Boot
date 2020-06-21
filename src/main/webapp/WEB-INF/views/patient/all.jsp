@@ -27,6 +27,7 @@
         <th><spring:message code="patient.lastName"/></th>
         <th><spring:message code="patient.created"/></th>
         <th><spring:message code="patient.doctor"/></th>
+        <th><spring:message code="patient.description"/></th>
         <th><spring:message code="app.action"/></th>
 
     </tr>
@@ -37,6 +38,7 @@
             <td><c:out value = "${patient.lastName}"/></td>
             <td><c:out value = "${patient.created}"/></td>
             <td><c:out value = "${patient.doctor}"/></td>
+            <td><c:out value = "${patient.description}"/></td>
             <td><a href="/patient/edit/${patient.id}"><spring:message code="app.edit"/></a><br>
             <a href="/patient/delete/${patient.id}"><spring:message code="app.delete"/></a></td>
         </tr>

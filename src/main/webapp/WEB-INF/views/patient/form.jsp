@@ -35,6 +35,8 @@
     <spring:message code="patient.doctor"/>:
     <form:select path="doctor" itemLabel="fullName" itemValue="id" items="${doctorList}" /> <br>
 
+    <spring:message code="patient.description"/>: <form:input path="description"/> <br>
+
     <input type="submit">
 </form:form>
 <br>
