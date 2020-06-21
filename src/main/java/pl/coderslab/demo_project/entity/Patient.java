@@ -29,6 +29,8 @@ public class Patient {
     @ManyToOne
     private Doctor doctor;
 
+    private String description;
+
     @PrePersist
     public void prePersist() {
         created = LocalDate.now();
@@ -41,6 +43,15 @@ public class Patient {
 //    public void setClinic(Clinic clinic) {
 //        this.clinic = clinic;
 //    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Doctor getDoctor() {
         return doctor;
