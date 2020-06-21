@@ -6,7 +6,6 @@ import javax.validation.ConstraintValidatorContext;
 public class HouseNumberValidator implements ConstraintValidator<HouseNumberCheck, String> {
     @Override
     public void initialize(HouseNumberCheck constraintAnnotation) {
-
     }
 
     @Override

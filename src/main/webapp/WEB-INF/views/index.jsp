@@ -13,9 +13,15 @@
 </head>
 <body>
 <h1><spring:message code="app.title"/></h1>
+<h2><spring:message code="clinic.clinics"/></h2>
+<a href="/clinic/all"><spring:message code="clinic.seeAll"/></a> <br>
 
+<h2><spring:message code="doctor.doctors"/></h2>
+<a href="/doctor/all"><spring:message code="doctor.seeAll"/></a> <br>
+
+<h2><spring:message code="patient.patients"/></h2>
 <a href="/patient/all"><spring:message code="patient.seeAll"/></a> <br>
-<a href="/clinic/all"><spring:message code="clinic.seeAll"/></a>
+
 <footer>
     <spring:message code="app.footer"/>
 </footer>
