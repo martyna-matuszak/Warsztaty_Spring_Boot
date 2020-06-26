@@ -33,7 +33,7 @@
     </tr>
     <c:forEach items="${patients}" var="patient">
         <tr>
-            <td><c:out value = "${patient.patientNumber}"/></td>
+            <td><a href="http://localhost:8080/patient/${patient.id}"><c:out value = "${patient.patientNumber}"/></a></td>
             <td><c:out value = "${patient.firstName}"/></td>
             <td><c:out value = "${patient.lastName}"/></td>
             <td><c:out value = "${patient.created}"/></td>

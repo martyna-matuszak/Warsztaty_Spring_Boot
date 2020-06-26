@@ -55,15 +55,14 @@ public class ClinicController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteView(Model model, @PathVariable long id) throws Exception {
-        Optional<Clinic> clinicOptional = clinicRepository.findById(id);
-        Clinic clinic = clinicOptional.orElseThrow(Exception::new);
-        model.addAttribute("clinic", clinic);
-        return "/clinic/delete";
+    public String deleteView() {
+        return "/delete";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@ModelAttribute Clinic clinic, @RequestParam String delete){
+    public String delete(@PathVariable long id, @RequestParam String delete) throws Exception {
+        Optional<Clinic> clinicOptional = clinicRepository.findById(id);
+        Clinic clinic = clinicOptional.orElseThrow(Exception::new);
         if (delete.equals("Delete")){
             clinicRepository.delete(clinic);
         }
