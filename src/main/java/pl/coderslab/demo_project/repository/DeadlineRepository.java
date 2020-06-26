@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface DeadlineRepository extends JpaRepository<Deadline, Long> {
 
-    List<Deadline> findAllByPatientId(Long id);
+    List<Deadline> findAllByPatientIdOrderByDueDate(Long id);
 }
