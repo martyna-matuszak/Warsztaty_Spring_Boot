@@ -61,10 +61,7 @@ public class DeadlineController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteView(Model model, @PathVariable long id) throws Exception {
-        Optional<Deadline> deadlineOptional = deadlineRepository.findById(id);
-        Deadline deadline = deadlineOptional.orElseThrow(Exception::new);
-        model.addAttribute("deletedObject", deadline.toString());
+    public String deleteView() {
         return "/delete";
     }
 

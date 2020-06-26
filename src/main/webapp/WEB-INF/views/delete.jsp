@@ -17,7 +17,6 @@
 
 <h1> <spring:message code="delete.message"/></h1>
 <spring:message code="delete.areYouSureQ"/><br>
-<c:out value = "${deletedObject}"/><br>
 
 <form method="POST">
     <label>
