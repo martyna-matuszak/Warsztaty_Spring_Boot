@@ -70,15 +70,14 @@ public class PatientController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteView(Model model, @PathVariable long id) throws Exception {
-        Optional<Patient> patientOptional = patientRepository.findById(id);
-        Patient patient = patientOptional.orElseThrow(Exception::new);
-        model.addAttribute("patient", patient);
-        return "/patient/delete";
+    public String deleteView() {
+        return "/delete";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@ModelAttribute Patient patient, @RequestParam String delete){
+    public String delete(@PathVariable long id, @RequestParam String delete) throws Exception {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        Patient patient = patientOptional.orElseThrow(Exception::new);
         if (delete.equals("Delete")){
             patientRepository.delete(patient);
         }
@@ -90,7 +89,7 @@ public class PatientController {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         Patient patient = patientOptional.orElseThrow(Exception::new);
         model.addAttribute("patient", patient);
-        List<Deadline> deadlines = deadlineRepository.findAllByPatientId(id);
+        List<Deadline> deadlines = deadlineRepository.findAllByPatientIdOrderByDueDate(id);
         model.addAttribute("deadlines", deadlines);
         return "/patient/patientPage";
     }
@@ -127,11 +126,6 @@ public class PatientController {
     public List<Clinic> clinicList(){
         return clinicRepository.findAll();
     }
-
-//    @ModelAttribute
-//    public List<Doctor> doctorList(Clinic clinic){
-//        return doctorRepository.findAllByClinic(clinic);
-//    }
 
     @ModelAttribute
     public List<Doctor> doctorList(){
