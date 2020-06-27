@@ -9,11 +9,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
+
+<jsp:include page="../header.jsp"/>
+
 <body>
+
 <h1><spring:message code="patient.patient"/> <c:out value = "${patient.patientNumber}"/></h1>
 <h2><spring:message code="patient.data"/></h2>
 <spring:message code="patient.fullName"/>: <c:out value = "${patient.fullName}"/><br>
@@ -32,24 +32,21 @@
         <th style="width:130px"><spring:message code="deadline.time"/></th>
         <th style="width:130px"><spring:message code="deadline.workStage"/></th>
         <th style="width:300px"><spring:message code="deadline.additionalInfo"/></th>
-        <th style="width:130px"><spring:message code="app.action"/></th>
+        <th style="width:130px"></th>
 
     </tr>
     <c:forEach items="${deadlines}" var="deadline">
         <tr style="height:20px">
-            <td style="text-align:center"><c:out value = "${deadline.time}"/></td>
-            <td style="text-align:center"><c:out value = "${deadline.workStage}"/></td>
-            <td style="text-align:center"><c:out value = "${deadline.additionalInfo}"/></td>
-            <td style="text-align:center"><a href="/deadline/edit/${deadline.id}"><spring:message code="app.edit"/></a>
+            <td><c:out value = "${deadline.time}"/></td>
+            <td><c:out value = "${deadline.workStage}"/></td>
+            <td><c:out value = "${deadline.additionalInfo}"/></td>
+            <td><a href="/deadline/edit/${deadline.id}"><spring:message code="app.edit"/></a>
                 <a href="/deadline/delete/${deadline.id}"><spring:message code="app.delete"/></a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 
-<br>
-<br>
-<a href="/patient/all"><spring:message code="patient.seeAll"/></a> <br>
-<spring:message code="app.return"/> <a href="http://localhost:8080/"><spring:message code="app.here"/></a>
+
 </body>
 </html>

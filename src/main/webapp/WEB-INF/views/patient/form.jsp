@@ -9,10 +9,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
+<jsp:include page="../header.jsp"/>
+
 <body>
 
 <h1><spring:message code="patient.inputData"/></h1>
@@ -29,18 +27,14 @@
 
     <spring:message code="patient.created"/>: <form:input path="created"/> <br>
 
-<%--    <spring:message code="patient.clinic"/>:--%>
-<%--    <form:select path="clinic" itemLabel="shortName" itemValue="id" items="${clinicList}" /><br>--%>
-
     <spring:message code="patient.doctor"/>:
     <form:select path="doctor" itemLabel="fullName" itemValue="id" items="${doctorList}" /> <br>
 
-    <spring:message code="patient.description"/>: <form:input path="description"/> <br>
+    <spring:message code="patient.description"/>: <form:input cssStyle="width: 300px" path="description"/> <br>
 
     <input type="submit">
 </form:form>
 <br>
-<spring:message code="app.return"/> <a href="http://localhost:8080/"><spring:message code="app.here"/></a>
 
 </body>
 </html>
