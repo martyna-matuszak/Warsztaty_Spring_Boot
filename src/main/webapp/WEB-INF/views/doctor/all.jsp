@@ -10,21 +10,21 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
+<jsp:include page="../header.jsp"/>
+
 <body>
 
-<h2><spring:message code="doctor.add"/></h2>
-<a href="/doctor/add">Click</a>
+<h2 style="display: inline"><spring:message code="doctor.add"/></h2>
+<a class="add" href="/doctor/add">+</a>
+
 <h2><spring:message code="doctor.seeAll"/></h2>
+
 <table>
     <tbody>
     <tr>
-        <th><spring:message code="doctor.firstName"/></th>
-        <th><spring:message code="doctor.lastName"/></th>
-        <th><spring:message code="doctor.clinic"/></th>
+        <th style="width: 200px"><spring:message code="doctor.firstName"/></th>
+        <th style="width: 200px"><spring:message code="doctor.lastName"/></th>
+        <th style="width: 200px"><spring:message code="doctor.clinic"/></th>
 
     </tr>
     <c:forEach items="${doctors}" var="doctor">
@@ -32,13 +32,12 @@
             <td><c:out value = "${doctor.firstName}"/></td>
             <td><c:out value = "${doctor.lastName}"/></td>
             <td><c:out value = "${doctor.clinic.shortName}"/></td>
-            <td><a href="/doctor/edit/${doctor.id}"><spring:message code="app.edit"/></a><br>
+            <td><a href="/doctor/edit/${doctor.id}"><spring:message code="app.edit"/></a>
             <a href="/doctor/delete/${doctor.id}"><spring:message code="app.delete"/></a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br>
-<spring:message code="app.return"/> <a href="http://localhost:8080/"><spring:message code="app.here"/></a>
 </body>
 </html>

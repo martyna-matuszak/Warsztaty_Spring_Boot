@@ -7,12 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
+
+<jsp:include page="header.jsp"/>
+
 <body>
-<h1><spring:message code="app.title"/></h1>
+<br>
 <h2><spring:message code="clinic.clinics"/></h2>
 <a href="/clinic/all"><spring:message code="clinic.seeAll"/></a> <br>
 
@@ -22,11 +21,9 @@
 <h2><spring:message code="patient.patients"/></h2>
 <a href="/patient/all"><spring:message code="patient.seeAll"/></a> <br>
 
-<h2>Przejdź do kalendarza</h2>
-<a href="/calendar">Kalendarz</a>
-
-<footer>
-    <spring:message code="app.footer"/>
-</footer>
+<h2><spring:message code="calendar.see"/></h2>
+<a href="/calendar"><spring:message code="calendar.calendar"/></a>
 </body>
+
 </html>
+

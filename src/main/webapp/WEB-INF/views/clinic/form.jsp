@@ -9,13 +9,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
+<jsp:include page="../header.jsp"/>
+
+
 <body>
 
-<h1><spring:message code="clinic.inputData"/></h1>
+<h2><spring:message code="clinic.inputData"/></h2>
 
 <form:form method="POST" modelAttribute="clinic">
     <spring:message code="clinic.shortName"/>: <form:input path="shortName"/>
@@ -42,7 +41,6 @@
     <input type="submit">
 </form:form>
 <br>
-<spring:message code="app.return"/> <a href="http://localhost:8080/"><spring:message code="app.here"/></a>
 
 </body>
 </html>

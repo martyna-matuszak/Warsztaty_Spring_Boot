@@ -9,26 +9,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<jsp:include page="../header.jsp"/>
 
-<html>
-<head>
-    <title><spring:message code="app.title"/></title>
-</head>
 <body>
 
-<h2><spring:message code="patient.add"/></h2>
-<a href="/patient/add">Click</a>
+<h2 style="display: inline"><spring:message code="patient.add"/></h2>
+<a class="add" href="/patient/add">+</a>
+
 <h2><spring:message code="patient.seeAll"/></h2>
-<table>
+<table style="table-layout: fixed">
     <tbody>
     <tr>
-        <th><spring:message code="patient.number"/></th>
-        <th><spring:message code="patient.firstName"/></th>
-        <th><spring:message code="patient.lastName"/></th>
-        <th><spring:message code="patient.created"/></th>
-        <th><spring:message code="patient.doctor"/></th>
-        <th><spring:message code="patient.description"/></th>
-        <th><spring:message code="app.action"/></th>
+        <th style="width: 100px"><spring:message code="patient.number"/></th>
+        <th style="width: 130px"><spring:message code="patient.firstName"/></th>
+        <th style="width: 130px"><spring:message code="patient.lastName"/></th>
+        <th style="width: 100px"><spring:message code="patient.created"/></th>
+        <th style="width: 250px"><spring:message code="patient.doctor"/></th>
+        <th style="width: 350px"><spring:message code="patient.description"/></th>
+        <th style="width: 150px"></th>
 
     </tr>
     <c:forEach items="${patients}" var="patient">
@@ -39,14 +37,13 @@
             <td><c:out value = "${patient.created}"/></td>
             <td><c:out value = "${patient.doctor}"/></td>
             <td><c:out value = "${patient.description}"/></td>
-            <td><a href="/patient/edit/${patient.id}"><spring:message code="app.edit"/></a><br>
+            <td><a href="/patient/edit/${patient.id}"><spring:message code="app.edit"/></a>
             <a href="/patient/delete/${patient.id}"><spring:message code="app.delete"/></a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br>
-<spring:message code="app.return"/> <a href="http://localhost:8080/"><spring:message code="app.here"/></a>
 
 </body>
 </html>
