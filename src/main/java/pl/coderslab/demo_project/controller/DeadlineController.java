@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.demo_project.calendar.DeadlineEvent;
 import pl.coderslab.demo_project.entity.Deadline;
 import pl.coderslab.demo_project.entity.Patient;
 import pl.coderslab.demo_project.repository.DeadlineRepository;
@@ -18,12 +19,14 @@ public class DeadlineController {
 
     private final DeadlineRepository deadlineRepository;
     private final PatientRepository patientRepository;
+    private final DeadlineEvent deadlineEvent;
 
     private static final String form = "/deadline/form";
 
     public DeadlineController(DeadlineRepository deadlineRepository, PatientRepository patientRepository) {
         this.deadlineRepository = deadlineRepository;
         this.patientRepository = patientRepository;
+        deadlineEvent = new DeadlineEvent();
     }
 
     @GetMapping("/add/{patientId}")
@@ -40,6 +43,7 @@ public class DeadlineController {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
         Patient patient = patientOptional.orElseThrow(Exception::new);
         deadline.setPatient(patient);
+        deadlineEvent.addEvent(deadline);
         deadlineRepository.save(deadline);
         return "redirect:/patient/" + patientId;
     }
