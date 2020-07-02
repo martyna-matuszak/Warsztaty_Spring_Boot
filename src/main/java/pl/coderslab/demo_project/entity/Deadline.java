@@ -3,6 +3,8 @@ package pl.coderslab.demo_project.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +18,7 @@ public class Deadline {
 
     private String workStage;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
@@ -25,6 +28,10 @@ public class Deadline {
 
     @ManyToOne
     private Patient patient;
+
+    private String eventId;
+
+    //========================================================================================
 
     public Long getId() {
         return id;
@@ -72,6 +79,14 @@ public class Deadline {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getTime(){

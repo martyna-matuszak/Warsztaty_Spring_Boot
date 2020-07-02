@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.demo_project.calendar.DeadlineEvent;
 import pl.coderslab.demo_project.entity.Clinic;
 import pl.coderslab.demo_project.entity.Deadline;
 import pl.coderslab.demo_project.entity.Doctor;
@@ -14,6 +15,8 @@ import pl.coderslab.demo_project.repository.DoctorRepository;
 import pl.coderslab.demo_project.repository.PatientRepository;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,8 @@ public class PatientController {
     private final ClinicRepository clinicRepository;
     private final DoctorRepository doctorRepository;
     private final DeadlineRepository deadlineRepository;
+    private final DeadlineEvent deadlineEvent;
+
     private static final String form = "/patient/form";
     private static final String redirect = "redirect:/patient/all";
 
@@ -34,6 +39,7 @@ public class PatientController {
         this.clinicRepository = clinicRepository;
         this.doctorRepository = doctorRepository;
         this.deadlineRepository = deadlineRepository;
+        this.deadlineEvent = new DeadlineEvent();
     }
 
 
@@ -61,10 +67,11 @@ public class PatientController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@Valid Patient patient, BindingResult result){
+    public String edit(@Valid Patient patient, BindingResult result) throws Exception{
         if(result.hasErrors()){
             return form;
         }
+        updateEvents(patient);
         patientRepository.save(patient);
         return redirect;
     }
@@ -120,6 +127,13 @@ public class PatientController {
             }
         }
         return patientNumber;
+    }
+
+    public void updateEvents(Patient patient) throws Exception {
+        List<Deadline> deadlines = deadlineRepository.findAllByPatientId(patient.getId());
+        for (Deadline deadline : deadlines) {
+            deadlineEvent.editEvent(deadline);
+        }
     }
 
     @ModelAttribute

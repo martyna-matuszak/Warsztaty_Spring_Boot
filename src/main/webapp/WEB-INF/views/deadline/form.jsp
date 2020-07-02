@@ -28,6 +28,7 @@
     <spring:message code="deadline.additionalInfo"/>: <form:input path="additionalInfo"/><br>
 
     <form:hidden path="patient"/>
+    <form:hidden path="eventId"/>
 
     <input type="submit">
 </form:form>
