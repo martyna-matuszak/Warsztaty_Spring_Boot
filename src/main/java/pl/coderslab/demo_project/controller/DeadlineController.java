@@ -11,6 +11,8 @@ import pl.coderslab.demo_project.repository.DeadlineRepository;
 import pl.coderslab.demo_project.repository.PatientRepository;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 @Controller
@@ -26,7 +28,7 @@ public class DeadlineController {
     public DeadlineController(DeadlineRepository deadlineRepository, PatientRepository patientRepository) {
         this.deadlineRepository = deadlineRepository;
         this.patientRepository = patientRepository;
-        deadlineEvent = new DeadlineEvent();
+        this.deadlineEvent = new DeadlineEvent();
     }
 
     @GetMapping("/add/{patientId}")
@@ -55,10 +57,11 @@ public class DeadlineController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@Valid Deadline deadline, BindingResult result){
+    public String edit(@Valid Deadline deadline, BindingResult result) throws IOException, GeneralSecurityException {
         if(result.hasErrors()){
             return form;
         }
+        deadlineEvent.editEvent(deadline);
         deadlineRepository.save(deadline);
         Long patientId = deadline.getPatient().getId();
         return "redirect:/patient/" + patientId;
@@ -75,6 +78,7 @@ public class DeadlineController {
         Deadline deadline = deadlineOptional.orElseThrow(Exception::new);
         Long patientId = deadline.getPatient().getId();
         if (delete.equals("Delete")){
+            deadlineEvent.deleteEvent(deadline);
             deadlineRepository.delete(deadline);
         }
         return "redirect:/patient/" + patientId;
