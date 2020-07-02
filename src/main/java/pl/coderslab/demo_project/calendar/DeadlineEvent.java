@@ -15,7 +15,6 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import pl.coderslab.demo_project.entity.Clinic;
 import pl.coderslab.demo_project.entity.Deadline;
 import pl.coderslab.demo_project.entity.Patient;
 
@@ -43,7 +42,7 @@ public class DeadlineEvent {
     private static final String CALENDAR_ID = "2833g92oir4comor9mu4afbcqo@group.calendar.google.com";
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        InputStream in = CalendarQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = DeadlineEvent.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -68,13 +67,38 @@ public class DeadlineEvent {
     public void addEvent(Deadline deadline) throws IOException, GeneralSecurityException {
         Calendar service = getService();
 
-        Patient patient = deadline.getPatient();
-        Clinic clinic = patient.getClinic();
+        Event event = new Event();
 
-        Event event = new Event()
-                .setSummary(patient.getPatientNumber() + " " + patient.getFullName())
-                .setLocation("clinic.getShortName()")
-                .setDescription(patient.getDescription() + "\n" + deadline.getWorkStage() + "\n" + deadline.getAdditionalInfo());
+        prepareEvent(deadline, event);
+
+        event = service.events().insert(CALENDAR_ID, event).execute();
+        deadline.setEventId(event.getId());
+
+    }
+
+    public void editEvent(Deadline deadline) throws IOException, GeneralSecurityException {
+        Calendar service = getService();
+        String eventId = deadline.getEventId();
+
+        Event event = service.events().get(CALENDAR_ID, eventId).execute();
+
+        prepareEvent(deadline, event);
+        service.events().update(CALENDAR_ID, eventId, event).execute();
+    }
+
+    public void deleteEvent(Deadline deadline) throws IOException, GeneralSecurityException {
+        Calendar service = getService();
+        String eventId = deadline.getEventId();
+        service.events().delete(CALENDAR_ID, eventId).execute();
+    }
+
+    private void prepareEvent(Deadline deadline, Event event){
+        Patient patient = deadline.getPatient();
+
+        event.setSummary(patient.getPatientNumber() + " " + patient.getFullName())
+                .setLocation(patient.getClinic().getShortName())
+                .setDescription(patient.getDescription() + "\n" + deadline.getTime() + " - " + deadline.getWorkStage()
+                        + "\n" + deadline.getAdditionalInfo());
 
         DateTime startDateTime = getStartFromDeadline(deadline);
         EventDateTime start = new EventDateTime()
@@ -85,11 +109,8 @@ public class DeadlineEvent {
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime);
         event.setEnd(end);
-
-        event = service.events().insert(CALENDAR_ID, event).execute();
-        deadline.setEventId(event.getId());
-
     }
+
 
     private DateTime getStartFromDeadline(Deadline deadline){
         LocalDateTime dateTime = getLocalDateTimeFromDeadline(deadline);
@@ -114,9 +135,9 @@ public class DeadlineEvent {
     }
 
     private String getOffset(){
-        TimeZone tz = TimeZone.getDefault();
-        java.util.Calendar cal = GregorianCalendar.getInstance(tz);
-        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
+        TimeZone timeZone = TimeZone.getDefault();
+        java.util.Calendar calendar = GregorianCalendar.getInstance(timeZone);
+        int offsetInMillis = timeZone.getOffset(calendar.getTimeInMillis());
 
         String offset = String.format("%02d:%02d", Math.abs(offsetInMillis / 3600000), Math.abs((offsetInMillis / 60000) % 60));
         offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
